@@ -1,0 +1,21 @@
+# 1. Move into the project directory
+cd "C:\Ara\Python\Api\Schwab\Working\Sales Analytics ETL using Polars"
+
+# 2. Link the local repo to GitHub
+git remote add origin https://github.com/ablake8788/Sales-Analytics-ETL-using-Polars.git
+
+# 3. Pull down the remote's existing commit
+git fetch origin
+
+# 4. Merge histories (local repo and GitHub repo had unrelated starting commits)
+git merge origin/main --allow-unrelated-histories
+# -> conflicts resolved by hand, then Vim editor got stuck open
+
+# 5. Unstick the hung Vim/commit process (only needed because the editor froze)
+Stop-Process -Id 45860 -Force
+
+# 6. Finalize the merge commit non-interactively
+git commit -m "Merge remote-tracking branch 'origin/main' into main"
+
+# 7. Push and set upstream tracking
+git push -u origin main
