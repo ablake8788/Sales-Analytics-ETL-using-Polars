@@ -23,3 +23,8 @@ logs/
 .pytest_cache/
 .coverage
 htmlcov/
+
+# PyInstaller build artifacts
+build/
+dist/
+*.spec
