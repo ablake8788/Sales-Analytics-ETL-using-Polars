@@ -1,0 +1,12 @@
+[sqlserver]
+driver = ODBC Driver 17 for SQL Server
+server = localhost
+database = PBI_Projects
+username = YOUR_USERNAME
+password = YOUR_PASSWORD
+trust_cert = yes
+
+; optional overrides — defaults shown
+table_transactions    = dbo.SchwabTransactions
+table_realized_gains  = dbo.SchwabSalesAnalytics_RealizedGains
+table_summary         = dbo.SchwabSalesAnalytics_Summary
