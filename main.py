@@ -44,6 +44,13 @@ log = logging.getLogger(__name__)
 
 
 def main() -> None:
+    # Windows consoles default to the system codepage (e.g. cp1252), which
+    # can't render some characters in Polars' table output — force UTF-8 so
+    # printing DataFrames never crashes the run regardless of the terminal.
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8", errors="replace")
+
     # ── 1. CLI args ────────────────────────────
     args = parse_args()
 

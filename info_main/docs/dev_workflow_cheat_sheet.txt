@@ -1,0 +1,19 @@
+Dev Workflow Cheat Sheet — Sales Analytics ETL using Polars
+==============================================================
+From application design to git check-in, condensed.
+
+| # | Phase | What happens | Key commands/files |
+|---|---|---|---|
+| 1 | Scope & design | Clarify data source/sink, domain, mirror sibling project's architecture (Singleton config, Repository, Composition Root) | Ask questions -> explore existing projects for conventions |
+| 2 | Design schema | Define input/output table contracts | sql/tables/*.sql (DDL) |
+| 3 | Build core layer | Config singleton + logging | core/config.py, core/logging_setup.py |
+| 4 | Build data-access layer | Connection factory + repositories | db/connection.py, db/*_reader.py, db/*_writer.py |
+| 5 | Build business logic | Core algorithm(s) | etl/*.py or schwab/*.py |
+| 6 | Build CLI + entry point | Args parsing + wire everything together | cli/args.py, main.py |
+| 7 | Unit test | Test logic with no DB/API needed | tests/*.py -> pytest |
+| 8 | Set up environment | Create venv, install deps | python -m venv .venv -> pip install -r requirements.txt |
+| 9 | Configure secrets | Copy template, fill real values | copy *.ini.template *.ini  (gitignored) |
+| 10 | Run DDL | Create tables in SQL Server | sqlcmd -i script.sql  or IDE data source |
+| 11 | Run application | Execute against real data | python main.py --args...  or  .\run_*.ps1 |
+| 12 | Git init & commit | Stage only real files (verify .gitignore first) | git init -> git add -A -> git status (check!) -> git commit |
+| 13 | Connect remote & push | Link to GitHub, reconcile, push | git remote add origin <url> -> git push -u origin main |
