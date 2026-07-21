@@ -1,0 +1,33 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sales_analytics_etl_sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "${MSSQL_SA_PASSWORD:?set MSSQL_SA_PASSWORD in a .env file, see .env.example}"
+      MSSQL_PID: "Developer"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  app:
+    build: .
+    container_name: sales_analytics_etl_app
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    volumes:
+      - ./sales_analytics_etl.ini:/app/sales_analytics_etl.ini:ro
+      - ./logs:/app/logs
+    # Override at `docker compose run app --start ... --end ... --write-back`
+    command: ["--start", "2026-01-01", "--end", "2026-07-01"]
+
+volumes:
+  sqlserver_data:

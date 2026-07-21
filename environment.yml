@@ -1,0 +1,10 @@
+name: sales-analytics-etl
+channels:
+  - conda-forge
+dependencies:
+  - python=3.13
+  - pip
+  - pip:
+      - polars==1.31.0
+      - pyodbc==5.2.0
+      - pytest==8.3.5

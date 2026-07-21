@@ -10,6 +10,7 @@ venv/
 
 # Sensitive — never commit
 sales_analytics_etl.ini
+.env
 
 # Logs
 logs/

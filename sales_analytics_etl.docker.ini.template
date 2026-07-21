@@ -1,0 +1,18 @@
+; Template for running inside docker-compose — copy to sales_analytics_etl.ini
+; (the file docker-compose.yml mounts into the app container).
+;
+; server = "sqlserver" resolves via the Docker Compose network to the
+; sqlserver service in docker-compose.yml, not localhost.
+
+[sqlserver]
+driver = ODBC Driver 17 for SQL Server
+server = sqlserver
+database = master
+username = sa
+password = CHANGE_ME_TO_MATCH_.env_MSSQL_SA_PASSWORD
+trust_cert = yes
+
+; optional overrides — defaults shown
+table_transactions    = dbo.SchwabTransactions
+table_realized_gains  = dbo.SchwabSalesAnalytics_RealizedGains
+table_summary         = dbo.SchwabSalesAnalytics_Summary
